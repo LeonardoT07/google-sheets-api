@@ -8,9 +8,15 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// Indica para o Express usar o EJS como View Engine
+app.set('view engine', 'ejs');
+
+// Indica para o Express onde ficarão os arquivos Estáticos
+app.use(express.static('public'));
+
 
 app.get("/", (req, res) => {
-    res.send("Olá, funcionando. Acesse o /metadata");
+    res.render('index.ejs');
 });
 
 app.get("/metadata", async (req, res) => {
@@ -59,5 +65,6 @@ app.post("/addRow", async (req, res) => {
     res.send(row.data);
   });
 
-
-app.listen(3001, () => console.log("Rodando na porta 3001!"));
+app.listen(3001, () => {
+    console.log("App rodando: http://localhost:3001 (Ctrl+Click)");
+});
